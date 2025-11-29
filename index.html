@@ -1,48 +1,630 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f2f2f2;
-        }
-        header {
-            background: #111;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        section {
-            padding: 20px;
-        }
-        footer {
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trading Sikho — Learn Trading from Zero</title>
+  <meta name="description" content="Simple Hindi trading lessons: basics, indicators, strategies, risk management. Start learning trading step-by-step." />
+  <style>
+    /* Reset + base */
+    :root{
+      --bg:#0f1724; /* dark blue */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#06b6d4;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --max:1100px;
+      --container-pad:20px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#071021 0%, #071525 60%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:var(--container-pad);
+    }
+
+    /* Navbar */
+    header.nav{
+      position:sticky;
+      top:0;
+      z-index:40;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(6,9,14,0.6), rgba(6,9,14,0.25));
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .nav-inner{display:flex;align-items:center;gap:16px;justify-content:space-between;max-width:var(--max);margin:0 auto;padding:14px;}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:700}
+    .logo{
+      width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#3b82f6);
+      display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#021;box-shadow:0 6px 20px rgba(3,7,18,0.6)
+    }
+    nav.main{display:flex;gap:14px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px;border-radius:8px;font-size:14px}
+    nav a:hover{color:#fff;background:rgba(255,255,255,0.02)}
+    .cta{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#021;padding:8px 12px;border-radius:10px;font-weight:600}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:center;padding:48px 0}
+    .hero-left h1{font-size:34px;margin:0 0 12px}
+    .hero-left p{color:var(--muted);margin:0 0 18px;font-size:16px}
+    .hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+    .input-inline{display:flex;border-radius:12px;background:var(--glass);padding:8px;align-items:center;gap:8px}
+    .btn-primary{background:var(--accent);color:#021;padding:10px 14px;border-radius:10px;border:none;font-weight:700}
+    .btn-outline{border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);background:transparent}
+
+    .hero-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 8px 30px rgba(2,6,23,0.6)
+    }
+    .hero-card img{width:100%;border-radius:12px;display:block}
+    .stats{display:flex;gap:14px;justify-content:space-between;margin-top:10px}
+    .stat{flex:1;text-align:center}
+    .stat strong{display:block;font-size:20px}
+
+    /* Sections */
+    section{padding:40px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    h2.section-title{margin:0 0 18px;font-size:20px}
+    p.lead{color:var(--muted);margin:0 0 18px}
+
+    /* Topics grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Blog */
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .post{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .post .meta{color:var(--muted);font-size:13px;margin-bottom:8px}
+    .post h4{margin:0 0 10px}
+    .post p{color:var(--muted);font-size:14px}
+
+    /* Footer */
+    footer{padding:30px 0;color:var(--muted);font-size:14px}
+    .foot-grid{display:flex;justify-content:space-between;gap:20px;align-items:center}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding:28px 0}
+      .grid, .blog-grid{grid-template-columns:repeat(2,1fr)}
+      nav.main{display:none}
+    }
+    @media (max-width:600px){
+      .grid, .blog-grid{grid-template-columns:1fr}
+      .logo{width:38px;height:38px}
+      .hero-left h1{font-size:22px}
+      .hero-left p{font-size:15px}
+      .nav-inner{padding:8px}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+    a.link{color:var(--accent);text-decoration:none}
+  </style>
 </head>
 <body>
 
-<header>
-    <h1>Welcome to My Website</h1>
-</header>
+  <!-- NAVBAR -->
+  <header class="nav" role="banner">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">TS</div>
+        <div>
+          <div style="font-size:15px">Trading Sikho</div>
+          <div style="font-size:12px;color:var(--muted)">Simple Hindi trading lessons</div>
+        </div>
+      </div>
 
-<section>
-    <h2>About Me</h2>
-    <p>This is a demo website created on GitHub.</p>
-</section>
+      <nav class="main" aria-label="Main navigation">
+        <a href="#topics">Topics</a>
+        <a href="#blog">Blog</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
 
-<footer>
-    © 2025 My Website
-</footer>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a class="btn-outline" href="https://github.com/mahtomahendar15-sudo/my-website" target="_blank" rel="noopener">Repo</a>
+      </div>
+    </div>
+  </header>
 
+  <!-- HERO -->
+  <main class="wrap" role="main">
+    <section class="hero" aria-labelledby="site-heading">
+      <div class="hero-left">
+        <h1 id="site-heading">Learn Trading — Zero se Pro tak (Hindi)</h1>
+        <p class="lead">Simple, step-by-step lessons on stocks, candlesticks, indicators, risk management and real strategies. Free mini-courses & examples.</p>
+        <div class="hero-cta">
+          <div class="input-inline" style="flex:1">
+            <input id="newsletter" placeholder="Enter your email for free 3-day guide" style="flex:1;border:0;background:transparent;color:inherit;outline:none;font-size:14px" />
+            <button class="btn-primary" onclick="subscribe()">Get Guide</button>
+          </div>
+          <a class="btn-outline" href="#topics">Browse Topics</a>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px">
+          <div style="background:var(--glass);padding:10px;border-radius:10px;width:140px;text-align:center">
+            <div style="font-size:18px;font-weight:700">Free</div>
+            <div class="muted" style="font-size:13px">Beginner friendly</div>
+          </div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px;width:140px;text-align:center">
+            <div style="font-size:18px;font-weight:700">30+</div>
+            <div class="muted" style="font-size:13px">Lessons & examples</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Preview">
+        <img src="https://images.unsplash.com/photo-1618005198919-20f6a3a03c8b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7c8295858e9b2f5b4d3b6f2b4a2a4a8b" alt="Charts preview" />
+        <div class="stats">
+          <div class="stat"><strong>₹0</strong><span class="muted">Start cost</span></div>
+          <div class="stat"><strong>Beginner</strong><span class="muted">Friendly</span></div>
+          <div class="stat"><strong>Step-by-step</strong><span class="muted">Guides</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- TOPICS -->
+    <section id="topics">
+      <h2 class="section-title">Main Topics</h2>
+      <p class="lead">Start with basics, then move to charts and real strategies. Har topic ke andar short lessons aur example honge.</p>
+
+      <div class="grid" role="list">
+        <article class="card" role="listitem">
+          <h3>What is Trading?</h3>
+          <p>Trading vs investing, market participants, basic terms explained in Hindi.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Candlestick Basics</h3>
+          <p>Open, high, low, close — aur common candlestick patterns with examples.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Chart Patterns</h3>
+          <p>Head & shoulders, double top/bottom, flags — entry and stop rules.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Indicators</h3>
+          <p>RSI, MACD, Moving averages — jab kaun use kare aur kya avoid kare.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Risk Management</h3>
+          <p>Position size, stop loss, reward:risk — money management rules.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Intraday vs Swing</h3>
+          <p>Differences, timeframes, broker & charges considerations.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog">
+      <h2 class="section-title">Latest Posts</h2>
+      <p class="lead">Sample lessons & notes — read, practice and comment.</p>
+
+      <div class="blog-grid">
+        <article class="post">
+          <div class="meta">Jan 10, 2025 • Beginner</div>
+          <h4>Intro to Candlesticks (Hindi)</h4>
+          <p>Simple explanation with 5 common patterns and how to read them in 3 steps.</p>
+          <a href="#read1" class="link">Read more →</a>
+        </article>
+
+        <article class="post">
+          <div class="meta">Jan 8, 2025 • Strategy</div>
+          <h4>Moving Average Crossover</h4>
+          <p>Short guide to using moving averages for trend confirmation and entries.</p>
+          <a href="#read2" class="link">Read more →</a>
+        </article>
+
+        <article class="post">
+          <div class="meta">Jan 2, 2025 • Risk</div>
+          <h4>Position Sizing 101</h4>
+          <p>How to decide trade size so one loss won't hurt your account.</p>
+          <a href="#read3" class="link">Read more →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-title">About This Site</h2>
+      <p class="lead">Ye site beginners ke liye banayi gayi hai — short lessons in Hindi with practical examples. No hype. Just simple steps.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="card" style="min-width:220px">
+          <h3>Who is this for?</h3>
+          <p class="muted">Beginners, students, part-time traders who want simple lessons in Hindi.</p>
+        </div>
+        <div class="card" style="min-width:220px">
+          <h3>Our promise</h3>
+          <p class="muted">Clear, practical, no spam. Free starter guide for new subscribers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / FOOTER -->
+    <section id="contact">
+      <h2 class="section-title">Get in touch</h2>
+      <p class="lead">Koi question? Drop your email and we will send the free guide.</p>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <input id="contactEmail" placeholder="Your email" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;min-width:220px" />
+        <button class="btn-primary" onclick="subscribeContact()">Send</button>
+        <a href="mailto:your-email@example.com" class="btn-outline">or email directly</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <strong>Trading Sikho</strong>
+          <div class="muted">Learn trading step-by-step — simple Hindi lessons.</div>
+        </div>
+        <div class="muted">© 2025 Trading Sikho • <a class="link" href="#contact">Contact</a> • <a class="link" href="#about">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // small helpers
+    function subscribe(){
+      const e = document.getElementById('newsletter').value.trim();
+      if(!e || !e.includes('@')){ alert('Email dal bhai'); return; }
+      alert('Thanks! Free guide sent to: ' + e + '\n(Example: this is a demo — set up real email integration later.)');
+    }
+    function subscribeContact(){
+      const e = document.getElementById('contactEmail').value.trim();
+      if(!e || !e.includes('@')){ alert('Email dal bhai'); return; }
+      alert('Done — we will contact: ' + e);
+    }
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trading Sikho — Learn Trading from Zero</title>
+  <meta name="description" content="Simple Hindi trading lessons: basics, indicators, strategies, risk management. Start learning trading step-by-step." />
+  <style>
+    /* Reset + base */
+    :root{
+      --bg:#0f1724; /* dark blue */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#06b6d4;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --max:1100px;
+      --container-pad:20px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#071021 0%, #071525 60%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:var(--container-pad);
+    }
+
+    /* Navbar */
+    header.nav{
+      position:sticky;
+      top:0;
+      z-index:40;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(6,9,14,0.6), rgba(6,9,14,0.25));
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .nav-inner{display:flex;align-items:center;gap:16px;justify-content:space-between;max-width:var(--max);margin:0 auto;padding:14px;}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:700}
+    .logo{
+      width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#3b82f6);
+      display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#021;box-shadow:0 6px 20px rgba(3,7,18,0.6)
+    }
+    nav.main{display:flex;gap:14px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px;border-radius:8px;font-size:14px}
+    nav a:hover{color:#fff;background:rgba(255,255,255,0.02)}
+    .cta{background:linear-gradient(90deg,var(--accent),#60a5fa);color:#021;padding:8px 12px;border-radius:10px;font-weight:600}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:center;padding:48px 0}
+    .hero-left h1{font-size:34px;margin:0 0 12px}
+    .hero-left p{color:var(--muted);margin:0 0 18px;font-size:16px}
+    .hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+    .input-inline{display:flex;border-radius:12px;background:var(--glass);padding:8px;align-items:center;gap:8px}
+    .btn-primary{background:var(--accent);color:#021;padding:10px 14px;border-radius:10px;border:none;font-weight:700}
+    .btn-outline{border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);background:transparent}
+
+    .hero-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 8px 30px rgba(2,6,23,0.6)
+    }
+    .hero-card img{width:100%;border-radius:12px;display:block}
+    .stats{display:flex;gap:14px;justify-content:space-between;margin-top:10px}
+    .stat{flex:1;text-align:center}
+    .stat strong{display:block;font-size:20px}
+
+    /* Sections */
+    section{padding:40px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    h2.section-title{margin:0 0 18px;font-size:20px}
+    p.lead{color:var(--muted);margin:0 0 18px}
+
+    /* Topics grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Blog */
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .post{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .post .meta{color:var(--muted);font-size:13px;margin-bottom:8px}
+    .post h4{margin:0 0 10px}
+    .post p{color:var(--muted);font-size:14px}
+
+    /* Footer */
+    footer{padding:30px 0;color:var(--muted);font-size:14px}
+    .foot-grid{display:flex;justify-content:space-between;gap:20px;align-items:center}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding:28px 0}
+      .grid, .blog-grid{grid-template-columns:repeat(2,1fr)}
+      nav.main{display:none}
+    }
+    @media (max-width:600px){
+      .grid, .blog-grid{grid-template-columns:1fr}
+      .logo{width:38px;height:38px}
+      .hero-left h1{font-size:22px}
+      .hero-left p{font-size:15px}
+      .nav-inner{padding:8px}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+    a.link{color:var(--accent);text-decoration:none}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="nav" role="banner">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">TS</div>
+        <div>
+          <div style="font-size:15px">Trading Sikho</div>
+          <div style="font-size:12px;color:var(--muted)">Simple Hindi trading lessons</div>
+        </div>
+      </div>
+
+      <nav class="main" aria-label="Main navigation">
+        <a href="#topics">Topics</a>
+        <a href="#blog">Blog</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <a class="btn-outline" href="https://github.com/mahtomahendar15-sudo/my-website" target="_blank" rel="noopener">Repo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="wrap" role="main">
+    <section class="hero" aria-labelledby="site-heading">
+      <div class="hero-left">
+        <h1 id="site-heading">Learn Trading — Zero se Pro tak (Hindi)</h1>
+        <p class="lead">Simple, step-by-step lessons on stocks, candlesticks, indicators, risk management and real strategies. Free mini-courses & examples.</p>
+        <div class="hero-cta">
+          <div class="input-inline" style="flex:1">
+            <input id="newsletter" placeholder="Enter your email for free 3-day guide" style="flex:1;border:0;background:transparent;color:inherit;outline:none;font-size:14px" />
+            <button class="btn-primary" onclick="subscribe()">Get Guide</button>
+          </div>
+          <a class="btn-outline" href="#topics">Browse Topics</a>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px">
+          <div style="background:var(--glass);padding:10px;border-radius:10px;width:140px;text-align:center">
+            <div style="font-size:18px;font-weight:700">Free</div>
+            <div class="muted" style="font-size:13px">Beginner friendly</div>
+          </div>
+          <div style="background:var(--glass);padding:10px;border-radius:10px;width:140px;text-align:center">
+            <div style="font-size:18px;font-weight:700">30+</div>
+            <div class="muted" style="font-size:13px">Lessons & examples</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Preview">
+        <img src="https://images.unsplash.com/photo-1618005198919-20f6a3a03c8b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7c8295858e9b2f5b4d3b6f2b4a2a4a8b" alt="Charts preview" />
+        <div class="stats">
+          <div class="stat"><strong>₹0</strong><span class="muted">Start cost</span></div>
+          <div class="stat"><strong>Beginner</strong><span class="muted">Friendly</span></div>
+          <div class="stat"><strong>Step-by-step</strong><span class="muted">Guides</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- TOPICS -->
+    <section id="topics">
+      <h2 class="section-title">Main Topics</h2>
+      <p class="lead">Start with basics, then move to charts and real strategies. Har topic ke andar short lessons aur example honge.</p>
+
+      <div class="grid" role="list">
+        <article class="card" role="listitem">
+          <h3>What is Trading?</h3>
+          <p>Trading vs investing, market participants, basic terms explained in Hindi.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Candlestick Basics</h3>
+          <p>Open, high, low, close — aur common candlestick patterns with examples.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Chart Patterns</h3>
+          <p>Head & shoulders, double top/bottom, flags — entry and stop rules.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Indicators</h3>
+          <p>RSI, MACD, Moving averages — jab kaun use kare aur kya avoid kare.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Risk Management</h3>
+          <p>Position size, stop loss, reward:risk — money management rules.</p>
+        </article>
+
+        <article class="card" role="listitem">
+          <h3>Intraday vs Swing</h3>
+          <p>Differences, timeframes, broker & charges considerations.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog">
+      <h2 class="section-title">Latest Posts</h2>
+      <p class="lead">Sample lessons & notes — read, practice and comment.</p>
+
+      <div class="blog-grid">
+        <article class="post">
+          <div class="meta">Jan 10, 2025 • Beginner</div>
+          <h4>Intro to Candlesticks (Hindi)</h4>
+          <p>Simple explanation with 5 common patterns and how to read them in 3 steps.</p>
+          <a href="#read1" class="link">Read more →</a>
+        </article>
+
+        <article class="post">
+          <div class="meta">Jan 8, 2025 • Strategy</div>
+          <h4>Moving Average Crossover</h4>
+          <p>Short guide to using moving averages for trend confirmation and entries.</p>
+          <a href="#read2" class="link">Read more →</a>
+        </article>
+
+        <article class="post">
+          <div class="meta">Jan 2, 2025 • Risk</div>
+          <h4>Position Sizing 101</h4>
+          <p>How to decide trade size so one loss won't hurt your account.</p>
+          <a href="#read3" class="link">Read more →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-title">About This Site</h2>
+      <p class="lead">Ye site beginners ke liye banayi gayi hai — short lessons in Hindi with practical examples. No hype. Just simple steps.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="card" style="min-width:220px">
+          <h3>Who is this for?</h3>
+          <p class="muted">Beginners, students, part-time traders who want simple lessons in Hindi.</p>
+        </div>
+        <div class="card" style="min-width:220px">
+          <h3>Our promise</h3>
+          <p class="muted">Clear, practical, no spam. Free starter guide for new subscribers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / FOOTER -->
+    <section id="contact">
+      <h2 class="section-title">Get in touch</h2>
+      <p class="lead">Koi question? Drop your email and we will send the free guide.</p>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <input id="contactEmail" placeholder="Your email" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;min-width:220px" />
+        <button class="btn-primary" onclick="subscribeContact()">Send</button>
+        <a href="mailto:your-email@example.com" class="btn-outline">or email directly</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <strong>Trading Sikho</strong>
+          <div class="muted">Learn trading step-by-step — simple Hindi lessons.</div>
+        </div>
+        <div class="muted">© 2025 Trading Sikho • <a class="link" href="#contact">Contact</a> • <a class="link" href="#about">About</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // small helpers
+    function subscribe(){
+      const e = document.getElementById('newsletter').value.trim();
+      if(!e || !e.includes('@')){ alert('Email dal bhai'); return; }
+      alert('Thanks! Free guide sent to: ' + e + '\n(Example: this is a demo — set up real email integration later.)');
+    }
+    function subscribeContact(){
+      const e = document.getElementById('contactEmail').value.trim();
+      if(!e || !e.includes('@')){ alert('Email dal bhai'); return; }
+      alert('Done — we will contact: ' + e);
+    }
+
+    // smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+  </script>
 </body>
-</html>
+          </html>    // smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+  </script>
+</body>
+            </html>
