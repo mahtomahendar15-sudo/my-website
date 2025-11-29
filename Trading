@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trading Sikho — Zero to Pro (Hindi)</title>
+  <meta name="description" content="Trading Sikho — simple Hindi trading lessons: price action, indicators, strategies, risk management, live market examples." />
+  <meta name="theme-color" content="#071024" />
+  <style>
+    /* ----------------- VARIABLES & RESET ----------------- */
+    :root{
+      --bg:#071024;
+      --card:#0b1630;
+      --muted:#98a6b8;
+      --accent:#00d4c4;
+      --accent-2:#6ee7b7;
+      --glass: rgba(255,255,255,0.03);
+      --radius:12px;
+      --max:1100px;
+      --pad:20px;
+      --text:#e6eef6;
+      --accent-3:#60a5fa;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(10,22,40,0.6), transparent),
+                  linear-gradient(180deg,#061226 0%, #071024 60%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      line-height:1.5;
+    }
+    a{color:inherit}
+    img{max-width:100%;display:block}
+
+    /* ----------------- CONTAINER ----------------- */
+    .wrap{max-width:var(--max);margin:0 auto;padding:var(--pad)}
+    header{position:sticky;top:0;z-index:80;background:linear-gradient(180deg, rgba(1,6,12,0.45), rgba(1,6,12,0.15));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-3));display:flex;align-items:center;justify-content:center;color:#021;font-weight:800;box-shadow:0 6px 22px rgba(2,6,23,0.6)}
+    .brand h1{font-size:16px;margin:0}
+    nav.main{display:flex;gap:12px;align-items:center}
+    nav.main a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px;font-size:14px}
+    nav.main a:hover{color:#fff;background:rgba(255,255,255,0.02)}
+
+    .cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021;padding:8px 12px;border-radius:10px;font-weight:700;text-decoration:none}
+
+    /* ----------------- HERO ----------------- */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center;padding:44px 0}
+    .hero h2{font-size:30px;margin-bottom:8px}
+    .lead{color:var(--muted);margin-bottom:16px}
+    .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+    .input-inline{display:flex;background:var(--glass);padding:8px;border-radius:12px;align-items:center;gap:8px}
+    .btn{padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#021}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(2,6,23,0.6)}
+    .stats{display:flex;gap:12px;justify-content:space-between;margin-top:12px}
+    .stat strong{display:block;font-size:18px}
+
+    /* ----------------- SECTIONS ----------------- */
+    section{padding:44px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    h3.section-title{font-size:20px;margin-bottom:10px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .card h4{margin-bottom:8px}
+    .muted{color:var(--muted)}
+
+    /* ----------------- BLOG ----------------- */
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+    /* ----------------- TOOLS / CHART MOCK ----------------- */
+    .chart-wrap{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    canvas#miniChart{width:100%;height:200px;border-radius:8px;display:block;background:linear-gradient(180deg,#021428,#051229)}
+
+    /* ----------------- CONTACT ----------------- */
+    .contact-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    input[type="email"], input[type="text"], textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:10px;color:var(--text);min-width:200px}
+    textarea{min-height:110px}
+
+    /* ----------------- FOOTER ----------------- */
+    footer{padding:24px 0;border-top:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+    .foot-grid{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+
+    /* ----------------- RESPONSIVE ----------------- */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;padding:28px 0}
+      .grid,.blog-grid{grid-template-columns:repeat(2,1fr)}
+      nav.main{display:none}
+    }
+    @media (max-width:600px){
+      .grid,.blog-grid{grid-template-columns:1fr}
+      .logo{width:38px;height:38px}
+      .hero h2{font-size:20px}
+      .nav{padding:10px 0}
+    }
+
+    /* ----------------- MICRO ANIMATIONS ----------------- */
+    .fade-up{opacity:0;transform:translateY(8px);animation:fadeUp .6s forwards}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600;color:var(--muted)}
+    .tag{font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">TS</div>
+        <div>
+          <h1 style="font-size:15px">Trading Sikho</h1>
+          <div class="tag">Simple Hindi trading lessons</div>
+        </div>
+      </div>
+
+      <nav class="main" role="navigation" aria-label="Main nav">
+        <a href="#topics">Topics</a>
+        <a href="#tools">Tools</a>
+        <a href="#blog">Blog</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
+
+      <div style="display:flex;gap:8px;align-items:center">
+        <a class="btn-ghost" href="https://github.com/mahtomahendar15-sudo/my-website" target="_blank" rel="noopener">Repo</a>
+        <a class="cta" href="#courses">Start Free</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="wrap" role="main">
+    <section class="hero" aria-labelledby="site-heading">
+      <div class="fade-up">
+        <h2 id="site-heading">Learn Trading — Zero se Pro (Hindi)</h2>
+        <p class="lead">Step-by-step lessons: price action, indicators, risk management, and simple strategies that actually work.</p>
+
+        <div class="hero-ctas" style="margin-bottom:12px">
+          <div class="input-inline" style="min-width:260px;">
+            <input id="heroEmail" type="email" placeholder="Email daalo — free 3-day guide" style="border:0;background:transparent;color:inherit;outline:none" />
+            <button class="btn btn-primary" onclick="subscribeHero()">Get Guide</button>
+          </div>
+          <a class="btn btn-ghost" href="#topics">Browse Topics</a>
+        </div>
+
+        <div style="display:flex;gap:10px">
+          <div class="pill">Free Guide</div>
+          <div class="pill">30+ Lessons</div>
+          <div class="pill">Beginner Friendly</div>
+        </div>
+      </div>
+
+      <aside class="hero-card fade-up" style="animation-delay:0.08s">
+        <img src="https://images.unsplash.com/photo-1618005198919-20f6a3a03c8b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=7c8295858e9b2f5b4d3b6f2b4a2a4a8b" alt="charts preview" />
+        <div class="stats" style="margin-top:12px">
+          <div class="stat"><strong>₹0</strong><span class="muted">Start cost</span></div>
+          <div class="stat"><strong>Beginner</strong><span class="muted">Friendly</span></div>
+          <div class="stat"><strong>Step-by-step</strong><span class="muted">Guides</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- TOPICS -->
+    <section id="topics">
+      <h3 class="section-title">Main Topics</h3>
+      <p class="muted">Start with basics and move to advanced strategies — har lesson practical examples ke sath.</p>
+
+      <div class="grid" style="margin-top:14px">
+        <article class="card fade-up" style="animation-delay:0.04s">
+          <h4>What is Trading?</h4>
+          <p class="muted">Market types, participants, order types and how trades actually execute.</p>
+        </article>
+
+        <article class="card fade-up" style="animation-delay:0.08s">
+          <h4>Candlestick Basics</h4>
+          <p class="muted">Open/high/low/close, common patterns, and practical reading tips.</p>
+        </article>
+
+        <article class="card fade-up" style="animation-delay:0.12s">
+          <h4>Chart Patterns</h4>
+          <p class="muted">Head & shoulders, double top/bottom, flags, and entries/stops.</p>
+        </article>
+
+        <article class="card fade-up" style="animation-delay:0.16s">
+          <h4>Indicators</h4>
+          <p class="muted">RSI, MACD, Moving averages — when to use and when to ignore.</p>
+        </article>
+
+        <article class="card fade-up" style="animation-delay:0.20s">
+          <h4>Risk Management</h4>
+          <p class="muted">Position sizing, stop loss rules, and reward:risk calculations.</p>
+        </article>
+
+        <article class="card fade-up" style="animation-delay:0.24s">
+          <h4>Intraday vs Swing</h4>
+          <p class="muted">Timeframes, broker charges, and choosing what fits your life.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- COURSES -->
+    <section id="courses">
+      <h3 class="section-title">Popular Mini-Courses</h3>
+      <p class="muted">Short focused courses — practice exercises included.</p>
+
+      <div class="grid" style="margin-top:14px">
+        <div class="card fade-up">
+          <h4>Beginner Essentials</h4>
+          <p class="muted">10 lessons — market basics, order types, and first demo trades.</p>
+        </div>
+
+        <div class="card fade-up">
+          <h4>Price Action Mastery</h4>
+          <p class="muted">Chart reading, structure, swing highs/lows and pattern recognition.</p>
+        </div>
+
+        <div class="card fade-up">
+          <h4>Strategy Toolkit</h4>
+          <p class="muted">3 practical strategies with entry/exit rules and risk control.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLS / LIVE MARKET MOCK -->
+    <section id="tools">
+      <h3 class="section-title">Live Market — Demo Chart</h3>
+      <p class="muted">Simple demo chart to show price movement (for demo only).</p>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:12px">
+        <div class="chart-wrap fade-up">
+          <canvas id="miniChart"></canvas>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card fade-up">
+            <h4>Quick Tools</h4>
+            <p class="muted">Position size calculator, risk calculator, and watchlist tips.</p>
+          </div>
+
+          <div class="card fade-up">
+            <h4>Top Indicators</h4>
+            <p class="muted">RSI, MACD, EMA (9/21/50), Volume analysis basics.</p>
+          </div>
+
+          <div class="card fade-up">
+            <h4>Broker Tips</h4>
+            <p class="muted">Choose broker with low intraday charges & good charting tools.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog">
+      <h3 class="section-title">Latest Posts</h3>
+      <p class="muted">Short lessons, examples and strategy breakdowns.</p>
+
+      <div class="blog-grid" style="margin-top:14px">
+        <article class="card fade-up">
+          <div class="tag muted">Jan 10, 2025 • Beginner</div>
+          <h4>Intro to Candlesticks (Hindi)</h4>
+          <p class="muted">5 common patterns and how to read them in practice.</p>
+          <a href="#read1" class="tag" style="color:var(--accent)">Read →</a>
+        </article>
+
+        <article class="card fade-up">
+          <div class="tag muted">Jan 8, 2025 • Strategy</div>
+          <h4>Moving Average Crossover</h4>
+          <p class="muted">A simple trend-following entry with stop rules.</p>
+          <a href="#read2" class="tag" style="color:var(--accent)">Read →</a>
+        </article>
+
+        <article class="card fade-up">
+          <div class="tag muted">Jan 2, 2025 • Risk</div>
+          <h4>Position Sizing 101</h4>
+          <p class="muted">Keep losses small so one trade won't hurt your account.</p>
+          <a href="#read3" class="tag" style="color:var(--accent)">Read →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- DETAILED GUIDES (anchors) -->
+    <section id="read1" style="padding-top:10px">
+      <h3 class="section-title">Intro to Candlesticks</h3>
+      <p class="muted">Open / High / Low / Close — simple reading method:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
+        <div class="card">
+          <h4>Bullish Engulfing</h4>
+          <p class="muted">Strong sign of reversal when a green candle fully engulfs prior red candle.</p>
+        </div>
+        <div class="card">
+          <h4>Hammer</h4>
+          <p class="muted">Small body, long lower wick — buyer pressure near support.</p>
+        </div>
+        <div class="card">
+          <h4>Shooting Star</h4>
+          <p class="muted">Top wick after uptrend — possible reversal or exhaustion.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="read2" style="padding-top:10px">
+      <h3 class="section-title">Moving Average Crossover</h3>
+      <p class="muted">Use EMA(9) & EMA(21) for trend confirmation. Entry when 9 crosses above 21 with volume.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+        <div class="card" style="min-width:220px">
+          <h4>Entry</h4>
+          <p class="muted">Buy when 9 EMA crosses above 21 EMA and structure supports trade.</p>
+        </div>
+        <div class="card" style="min-width:220px">
+          <h4>Stop</h4>
+          <p class="muted">Place stop below recent swing low or candle low.</p>
+        </div>
+        <div class="card" style="min-width:220px">
+          <h4>Target</h4>
+          <p class="muted">Set 1.5–3x reward:risk depending on volatility.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="read3" style="padding-top:10px">
+      <h3 class="section-title">Position Sizing</h3>
+      <p class="muted">Decide risk per trade (e.g., 1% of account). Calculate qty using stop distance.</p>
+      <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+        <div class="card">
+          <h4>Example</h4>
+          <p class="muted">Account ₹50,000; risk 1% → ₹500 risk. If stop 25 points → lot/qty = 500/25 = 20 shares.</p>
+        </div>
+        <div class="card">
+          <h4>Tip</h4>
+          <p class="muted">Round down quantity; preserve capital.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h3 class="section-title">About This Site</h3>
+      <p class="muted">Ye site beginners aur part-time traders ke liye banayi gayi hai — simple Hindi lessons with practical examples. No hype — sirf useful steps.</p>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+        <div class="card" style="min-width:220px">
+          <h4>Who is this for?</h4>
+          <p class="muted">Beginners, students, and anyone who wants structured learning in Hindi.</p>
+        </div>
+        <div class="card" style="min-width:220px">
+          <h4>Promise</h4>
+          <p class="muted">Clear lessons, real examples, and practice exercises.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h3 class="section-title">Contact / Free Guide</h3>
+      <p class="muted">Drop your email to get a free 3-day guide. (Demo: no real emails are sent until you integrate email provider.)</p>
+
+      <div class="contact-row" style="margin-top:12px">
+        <input id="contactEmail" type="email" placeholder="Your email (example@mail.com)" />
+        <button class="btn btn-primary" onclick="subscribeContact()">Send Guide</button>
+        <a class="btn btn-ghost" href="mailto:your-email@example.com">or email directly</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap foot-grid">
+      <div>
+        <strong>Trading Sikho</strong>
+        <div class="muted">Learn trading step-by-step in Hindi.</div>
+      </div>
+      <div class="muted">© 2025 Trading Sikho • <a class="muted" href="#contact">Contact</a> • Built with ❤️</div>
+    </div>
+  </footer>
+
+  <!-- ----------------- SCRIPTS: small helpers + mock chart ----------------- -->
+  <script>
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const href = this.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+
+    // Subscribe hero (demo)
+    function subscribeHero(){
+      const e = document.getElementById('heroEmail').value.trim();
+      if(!e || !e.includes('@')){ alert('Sahi email daal bhai'); return; }
+      alert('Thanks! Free guide will be sent to: ' + e + '\\n(Setup real mail later)');
+    }
+    function subscribeContact(){
+      const e = document.getElementById('contactEmail').value.trim();
+      if(!e || !e.includes('@')){ alert('Sahi email daal bhai'); return; }
+      alert('Thanks! We will contact: ' + e);
+    }
+
+    // Simple mock candle-like chart (canvas) — purely illustrative
+    (function(){
+      const c = document.getElementById('miniChart');
+      if(!c) return;
+      const ctx = c.getContext('2d');
+      // Resize canvas for high DPI
+      function resize(){
+        const w = c.clientWidth;
+        const h = 220;
+        c.width = w * devicePixelRatio;
+        c.height = h * devicePixelRatio;
+        ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+        draw();
+      }
+      window.addEventListener('resize', resize);
+      // Generate sample price series
+      const points = [];
+      let p = 100;
+      for(let i=0;i<60;i++){
+        p += (Math.random()-0.45)*(Math.random()*8);
+        points.push(Math.max(20, p));
+      }
+      function draw(){
+        const W = c.clientWidth;
+        const H = 220;
+        ctx.clearRect(0,0,W,H);
+        // background grid
+        ctx.fillStyle = '#041028';
+        ctx.fillRect(0,0,W,H);
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+        ctx.lineWidth = 1;
+        for(let y=0;y<H;y+=30){
+          ctx.beginPath();
+          ctx.moveTo(0,y);
+          ctx.lineTo(W,y);
+          ctx.stroke();
+        }
+        // draw price line
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(96,165,250,0.95)';
+        for(let i=0;i<points.length;i++){
+          const x = (i/(points.length-1))*(W-20)+10;
+          const y = H - ((points[i]-20)/(160))*(H-20) -10;
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        // fill gradient under line
+        const grad = ctx.createLinearGradient(0,0,0,H);
+        grad.addColorStop(0,'rgba(96,165,250,0.12)');
+        grad.addColorStop(1,'rgba(2,6,23,0.02)');
+        ctx.lineTo(W-10,H);
+        ctx.lineTo(10,H);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+        // current price box
+        const last = points[points.length-1];
+        ctx.fillStyle = '#062030';
+        ctx.fillRect(W-120,10,110,30);
+        ctx.fillStyle = '#9ae6b4';
+        ctx.font = '16px system-ui';
+        ctx.fillText('Price: ' + Math.round(last*100)/100, W-108, 30);
+      }
+      resize();
+    })();
+
+    // small fade-up animation trigger
+    document.addEventListener('DOMContentLoaded', function(){
+      const items = document.querySelectorAll('.fade-up');
+      items.forEach((el,i)=>{
+        setTimeout(()=> el.style.animation = 'fadeUp .6s forwards', i*80 + 100);
+      });
+    });
+  </script>
+</body>
+</html>
